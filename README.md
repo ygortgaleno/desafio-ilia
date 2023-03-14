@@ -7,6 +7,8 @@ O desafio consiste na implementação da API descrita em api.yaml. Todas as info
 
 É esperado que o projeto compile sem erros e que quaisquer instruções necessárias para preparar o ambiente e testar o projeto sejam fornecidas pelo desenvolvedor.
 
+A API pode ser visualizada utilizando o [Swagger Editor](https://editor.swagger.io) com o arquivo yaml fornecido. 
+
 ## Q&A
 ### Qual framework/linguagem devo utilizar?
 Para facilitar a avaliação do desafio, pedimos que ele seja realizado em .NET, Java ou NodeJS.
