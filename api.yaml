@@ -4,51 +4,54 @@ info:
   version: "1.0"
 components:
   schemas:
-    Mensagem:
+    Erro:
       type: object
       properties:
         mensagem:
           type: string
-    Momento:
+    Batida:
       type: object
-      description: O momento da batida
+      description: Batida de ponto
       properties:
-        dataHora:
-          description: Data e hora da batida
+        momento:
+          description: Momento da batida
           type: string
           example: "2018-08-22T08:00:00"
-    Registro:
+    Expediente:
       type: object
+      description: Jornada diária de trabalho
       properties:
         dia:
           type: string
           format: date
-        horarios:
+        pontos:
           type: array
           example: ["08:00:00", "12:00:00", "13:00:00", "18:00:00"]
           items:
             type: string
-
     Relatorio:
       type: object
       description: Relatório mensal
       properties:
         mes:
+          format: ISO 8601.Duration
           type: string
           example: 2018-08
         horasTrabalhadas:
+          format: ISO 8601.Duration
           type: string
           example: PT69H35M5S
         horasExcedentes:
           type: string
           example: PT25M5S
         horasDevidas:
+          format: ISO 8601.Duration
           type: string
           example: PT0S
-        registros:
+        expedientes:
           type: array
           items:
-            $ref: '#/components/schemas/Registro'
+            $ref: '#/components/schemas/Expediente'
 paths:
   /v1/batidas:
     post:
@@ -56,12 +59,11 @@ paths:
         - "Batidas"
       summary: "Bater ponto"
       description: "Registrar um horário da jornada diária de trabalho"
-      operationId: "insereBatida"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Momento"
+              $ref: "#/components/schemas/Batida"
       responses:
         "201":
           description: |
@@ -69,36 +71,28 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Registro"
+                $ref: "#/components/schemas/Expediente"
         "400":
           description: |
             Bad Request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Mensagem"
+                $ref: "#/components/schemas/Erro"
               examples:
-                Data e hora em formato inválido:
-                  value:
-                    mensagem: Data e hora em formato inválido
-                Campo obrigatório não informado:
-                  value:
-                    mensagem: Campo obrigatório não informado
-        "403":
-          description: |
-            Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Mensagem"
-              examples:
-                apenas 4 horários por dia:
-                  value:
-                    mensagem: Apenas 4 horários podem ser registrados por dia
-                mínimo 1 hora de almoço:
+                Almoço:
                   value:
                     mensagem: Deve haver no mínimo 1 hora de almoço
-                sábado e domingo não são permitidos:
+                Campo Obrigatório:
+                  value:
+                    mensagem: Campo obrigatório não informado
+                Formato Inválido:
+                  value:
+                    mensagem: Data e hora em formato inválido
+                4 Horários:
+                  value:
+                    mensagem: Apenas 4 horários podem ser registrados por dia
+                Sábado/Domingo:
                   value:
                     mensagem: Sábado e domingo não são permitidos como dia de trabalho
         "409":
@@ -107,7 +101,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Mensagem"
+                $ref: "#/components/schemas/Erro"
               examples:
                 Horário já registrado:
                   value:
@@ -118,7 +112,6 @@ paths:
         - Folhas de Ponto
       summary: "Relatório mensal"
       description: "Geração de relatório mensal de usuário."
-      operationId: "geraRelatorioMensal"
       parameters:
         - name: mes
           in: path
