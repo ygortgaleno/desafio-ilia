@@ -50,4 +50,4 @@ jobs:
         ./cc-test-reporter before-build
         ./cc-test-reporter after-build --id ${{ env.CC_TEST_REPORTER_ID }} --exit-code $JEST_EXIT_CODE
       env:
-        CC_TEST_REPORTER_ID: 00f528c74d97ec0f2fa55578da6dbe51183910e9da77a7a08c52e0b57aff720c
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
