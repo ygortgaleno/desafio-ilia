@@ -12,8 +12,8 @@ services:
   app:
     image: ilia-backend:dev
     build: .
-    # entrypoint: ["sh"]
-    # command: ["-c", "npm i && npm start"]
+    entrypoint: ["sh"]
+    command: ["-c", "npm i && npm start"]
     ports:
       - 3000:3000
     links:
@@ -29,13 +29,13 @@ services:
       - ./tsconfig.json:/app/tsconfig.json
       - ./.eslintrc.json:/app/.eslintrc.json
       - ./jest.config.ts:/app/jest.config.ts
-  adminer:
-    image: adminer
-    restart: always
-    links:
-      - database
-    ports:
-      - 8080:8080
+#   adminer:
+#     image: adminer
+#     restart: always
+#     links:
+#       - database
+#     ports:
+#       - 8080:8080
 volumes:
   node_modules: {}
   postgres_volume: {}
