@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres
+    volumes:
+      - ./config/database/01_create_time_sheet.sql:/docker-entrypoint-initdb.d/01_create_time_sheet.sql
+      - ./config/database/02_create_month_report.sql:/docker-entrypoint-initdb.d/02_create_month_report.sql
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "Postgres2024!"
+  app:
+    image: ilia-backend:dev
+    build: .
+    # entrypoint: ["sh"]
+    # command: ["-c", "npm i && npm start"]
+    ports:
+      - 3000:3000
+    links:
+      - database
+    env_file:
+      - ./config/development.env
+    volumes:
+      - node_modules:/app/node_modules
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./.eslintrc.json:/app/.eslintrc.json
+      - ./jest.config.ts:/app/jest.config.ts
+  adminer:
+    image: adminer
+    restart: always
+    links:
+      - database
+    ports:
+      - 8080:8080
+volumes:
+  node_modules: {}
+  postgres_volume: {}
