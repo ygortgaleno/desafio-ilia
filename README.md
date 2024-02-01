@@ -1,30 +1,45 @@
-# Ília - Desafio Técnico
+# Ilia Backend Test
 
-## Descrição
-Olá, e obrigado por aceitar realizar o desafio técnico do nosso processo seletivo! (:
+## Prerequisites
+- Docker
+- Docker Compose
 
-O desafio consiste na implementação de uma API de folha de ponto, descrita em api.yaml. Todas as informações necessárias sobre a construção da API estão contidas nesse arquivo.
+## Setup and Installation
 
-O desafio será testado usando Docker. Certifique-se de que todo o ambiente necessário para a execução do projeto esteja descrito de maneira que seja possível testar o projeto apenas criando um container.
+### Clone the Repository
+First, clone the repository to your local machine:
+```bash
+git clone git@github.com:ygortgaleno/desafio-ilia.git
+```
 
-A API pode ser visualizada utilizando o [Swagger Editor](https://editor.swagger.io) com o arquivo yaml fornecido. 
+### Environment Variables
+Ensure you have the required environment variables set up. These variables are defined in `./config/development.env` file.
 
-## Q&A
-### Qual framework/linguagem devo utilizar?
-Para facilitar a avaliação do desafio, pedimos que ele seja realizado em .NET, Java ou NodeJS.
+### Starting the Services with Docker Compose
+Run the following command to start all services:
+```bash
+docker-compose up --build
+```
 
-### Como o meu projeto será avaliado?
-Os três prontos principais são os seguintes:
-- Ambiente: Como mencionado acima, é esperado que seja possível ter um ambiente com o projeto executando de maneira fácil e rápida. Qualquer instrução necessária para isso deve ser fornecida pelo desenvolvedor. Esse será o primeiro ponto a ser avaliado.
-- API: O ponto principal do teste é a implementação da API, exatamente como descrita no arquivo api.yaml. Os diferentes erros estão fornecidos como exemplos na documentação da API. Nenhum dos cenários descritos como erro na documentação deve ser permitido pelo serviço.
-- Testes: É esperado que, ao mínimo, sejam criados testes unitários para as funcionalidades implementadas no desafio.
-Além disso, naturalmente, o código do desafio será avaliado.
+This command will build and start the following services:
+- `database`: A PostgreSQL database.
+- `app`: The Node.js application.
 
-### Durante a implementação, encontrei um cenário que não está 100% claro para mim como deve ser implementado. Como devo proceder?
-Ao encontrar alguma situação além do que está descrito na documentação da API, faça da maneira que, na sua visão, faz mais sentido para o contexto de uma API de controle de folha de ponto.
+### Database Initialization
+The database will be initialized with the SQL scripts located in `./config/database`. This includes:
+- `01_create_time_sheet.sql`: Script to create the timesheet table.
+- `02_create_month_report.sql`: Script to create the month report table.
 
-### Terminei a implementação da API. É necessário fazer mais alguma coisa?
-Não há nenhum outro requisito fixo além dos especificados na documentação da API e nesse documento. Porém, pedimos que, dentro do prazo estabelecido, o desafio seja entregue da maneira mais completa possível. Será avaliado o que o candidato considera ser essencial para a entrega do projeto.
+### Accessing the Application
+Once the services are up and running, the Node.js application will be accessible at:
+```
+http://localhost:3000
+```
 
-### Terminei o desafio. Como faço a entrega?
-Envie-nos por favor um link com o repositório para que possamos dar uma olhada no código. 😉
+## Testing
+To run tests, execute the following command:
+```bash
+docker-compose run app npm test
+```
+
+---
