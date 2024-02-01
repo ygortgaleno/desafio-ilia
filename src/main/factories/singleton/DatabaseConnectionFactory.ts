@@ -1,6 +1,6 @@
 import knex from 'knex';
 
-class DatabaseConnection {
+class DatabaseConnectionFactory {
 	static create() {
 		// eslint-disable-next-line @typescript-eslint/naming-convention
 		const {POSTGRES_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DATABASE} = process.env;
@@ -16,12 +16,12 @@ class DatabaseConnection {
 			postProcessResponse(result: Array<Record<string, any>> | Record<string, any>) {
 				if (Array.isArray(result)) {
 					return result.map(
-						(row: Record<string, any>) => DatabaseConnection
+						(row: Record<string, any>) => DatabaseConnectionFactory
 							.parseDateFieldOfResultRow(row),
 					);
 				}
 
-				return DatabaseConnection.parseDateFieldOfResultRow(result);
+				return DatabaseConnectionFactory.parseDateFieldOfResultRow(result);
 			},
 		});
 	}
@@ -38,4 +38,4 @@ class DatabaseConnection {
 	}
 }
 
-export const databaseConnection = DatabaseConnection.create();
+export const databaseConnection = DatabaseConnectionFactory.create();

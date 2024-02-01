@@ -12,8 +12,7 @@ services:
   app:
     image: ilia-backend:dev
     build: .
-    entrypoint: ["sh"]
-    command: ["-c", "npm i && npm start"]
+    command: ["sh", "-c", "npm i && npm run start:dev"]
     ports:
       - 3000:3000
     links:

@@ -14,4 +14,4 @@ COPY src ./src
 
 COPY tests ./tests
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"]

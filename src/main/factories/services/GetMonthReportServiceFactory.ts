@@ -2,7 +2,7 @@ import {GetMonthReport} from '../../../domain/services/GetMonthReport';
 import {HoursManagerAdapter} from '../../../domain/utils/HoursManagerAdapter';
 import {MonthReportRepositoryAdapter} from '../../../infrastructure/repositories/MonthReportRepositoryAdapter';
 import {TimeSheetRepositoryAdapter} from '../../../infrastructure/repositories/TimeSheetRepositoryAdapter';
-import {databaseConnection} from '../singleton/DatabaseConnection';
+import {databaseConnection} from '../singleton/DatabaseConnectionFactory';
 
 export class GetMonthReportServiceFactory {
 	static create() {
