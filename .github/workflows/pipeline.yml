@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Ilia Backend Test
 
 on:
   push:
@@ -38,5 +38,16 @@ jobs:
     - name: Run npm audit
       run: npm audit --production
 
-    - name: Run tests
-      run: npm test
+    - name: Run tests coverage
+      run: |
+        npm run test:coverage
+        echo "JEST_EXIT_CODE=$?" > $GITHUB_ENV
+
+    - name: Report coverage to Code Climate
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+        ./cc-test-reporter after-build --id ${{ env.CC_TEST_REPORTER_ID }} --exit-code $JEST_EXIT_CODE
+      env:
+        CC_TEST_REPORTER_ID: 00f528c74d97ec0f2fa55578da6dbe51183910e9da77a7a08c52e0b57aff720c

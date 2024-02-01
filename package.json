@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "start": "tsnd ./src/main/express/Server.ts"
   },
   "keywords": [],

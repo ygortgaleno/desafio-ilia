@@ -1,4 +1,7 @@
 # Ilia Backend Test
+![Main](https://github.com/ygortgaleno/desafio-ilia/actions/workflows/pipeline.yml/badge.svg?branch=main)
+[![Maintainability](https://api.codeclimate.com/v1/badges/4fdb5a8a17d15a02bcd6/maintainability)](https://codeclimate.com/github/ygortgaleno/desafio-ilia/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/4fdb5a8a17d15a02bcd6/test_coverage)](https://codeclimate.com/github/ygortgaleno/desafio-ilia/test_coverage)
 
 ## Prerequisites
 - Docker
